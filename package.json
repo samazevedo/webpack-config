@@ -1,0 +1,28 @@
+{
+  "name": "webpack-project",
+  "version": "1.0.0",
+  "description": "webpack project ",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "start": "webpack serve",
+    "watch": "webpack --watch",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samazevedo/webpack-config.git"
+  },
+  "keywords": [],
+  "author": "Sam Azevedo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samazevedo/webpack-config/issues"
+  },
+  "homepage": "https://github.com/samazevedo/webpack-config#readme",
+  "devDependencies": {
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
