@@ -1,23 +1,33 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-let mode = "development";
+const mode = process.env.NODE_ENV || "development";
+//temporary workaroung for 'browserslist' bug that is being patched in the near future
 
-if (process.env.NODE_ENV === "production") {
-    mode = "production"
-}
+const target = process.env.NODE_ENV === "prodution" ? "browserslist" : "web"
 
 module.exports = {
-    mode: "development",
+
+    // mode defaults to 'production' if not set
+    mode: mode,
+
+    // entry not require if using 'scr/index.js' default
+    // output not required if using 'dist/main.js' default
+
+    target: target,
 
     module: {
         rules: [
             {
-                test: /\.s?css$/i,
-                use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader", "sass-loader"],
+                test: /\.(s[ac]|c)ss$/i,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    "css-loader",
+                    "postcss-loader",
+                    "sass-loader"],
 
             },
             {
-                test: /\.js$/,
+                test: /\.js|jsx$/,
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader",
