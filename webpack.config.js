@@ -1,9 +1,15 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-const mode = process.env.NODE_ENV || "development";
-//temporary workaroung for 'browserslist' bug that is being patched in the near future
+let mode = "development";
+let target = "web";
+if (process.env.NODE_ENV === "production") {
+    mode = "production";
+    target = "browserslist";
+}
 
-const target = process.env.NODE_ENV === "prodution" ? "browserslist" : "web"
+// const mode = process.env.NODE_ENV || "development";
+// //temporary workaroung for 'browserslist' bug that is being patched in the near future
+// const target = process.env.NODE_ENV === "prodution" ? "browserslist" : "web"
 
 module.exports = {
 
@@ -14,17 +20,27 @@ module.exports = {
     // output not required if using 'dist/main.js' default
 
     target: target,
+    output: {
+        assetModuleFilename: "image/[hash][ext][query]",
+    },
 
     module: {
         rules: [
             {
+                test: /\.(png|jpe?g|gif|svg)$/i,
+                type: "asset",
+            },
+            {
                 test: /\.(s[ac]|c)ss$/i,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: { publicPath: "" },
+                    },
                     "css-loader",
                     "postcss-loader",
-                    "sass-loader"],
-
+                    "sass-loader"
+                ],
             },
             {
                 test: /\.jsx?$/,
